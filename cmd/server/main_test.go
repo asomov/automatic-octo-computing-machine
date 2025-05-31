@@ -78,6 +78,8 @@ func TestMemStorage_webhook(t *testing.T) {
 			res := w.Result()
 			// проверяем код ответа
 			require.Equal(t, tt.code, res.StatusCode, tt.name)
+			// получаем и проверяем тело запроса
+			defer res.Body.Close()
 		})
 	}
 }
@@ -107,6 +109,8 @@ func Test_GET_webhook(t *testing.T) {
 			res := w.Result()
 			// проверяем код ответа
 			require.Equal(t, tt.code, res.StatusCode)
+			// получаем и проверяем тело запроса
+			defer res.Body.Close()
 		})
 	}
 }
