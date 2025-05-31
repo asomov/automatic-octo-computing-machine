@@ -2,15 +2,12 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
-	"sync"
 )
 
 type MemStorage struct {
-	mu       sync.Mutex
 	gauges   map[string]float64
 	counters map[string]int64
 }
@@ -40,7 +37,7 @@ func (store *MemStorage) apply(metricType string, metricName string, metricValue
 		}
 		previous := store.counters[metricName]
 		store.counters[metricName] = previous + i
-		fmt.Println("Added", i)
+		//fmt.Println("Added", i)
 	} else {
 		// gauge
 		f, err := strconv.ParseFloat(metricValue, 64)
@@ -48,7 +45,7 @@ func (store *MemStorage) apply(metricType string, metricName string, metricValue
 			return err
 		}
 		store.gauges[metricName] = f
-		fmt.Println("Replaced", f)
+		//fmt.Println("Replaced", f)
 	}
 	return nil
 }
@@ -61,7 +58,7 @@ func (store *MemStorage) webhook(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	line := r.RequestURI
-	fmt.Println(line)
+	//fmt.Println(line)
 	if !strings.HasPrefix(line, "/update/") {
 		// must begin with update
 		w.WriteHeader(http.StatusBadRequest)

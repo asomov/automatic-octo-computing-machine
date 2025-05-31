@@ -77,7 +77,7 @@ func TestMemStorage_webhook(t *testing.T) {
 			store.webhook(w, request)
 			res := w.Result()
 			// проверяем код ответа
-			require.Equal(t, tt.code, res.StatusCode)
+			require.Equal(t, tt.code, res.StatusCode, tt.name)
 		})
 	}
 }
