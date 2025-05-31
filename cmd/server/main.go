@@ -79,8 +79,8 @@ func (store *MemStorage) webhook(w http.ResponseWriter, r *http.Request) {
 	}
 	err := store.apply(split[2], split[3], split[4])
 	if err != nil {
-		w.Write([]byte(err.Error()))
 		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
 		return
 	}
 
